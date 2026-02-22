@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  FLUTTER_VERSION: '3.27.0'
+  NODE_VERSION: '20'
+
+jobs:
+  # Flutter Mobile App
+  flutter-analyze:
+    name: Flutter Analyze & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile_app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyze project source
+        run: flutter analyze --fatal-infos
+      - name: Run unit tests
+        run: flutter test --coverage
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-coverage
+          path: mobile_app/coverage/lcov.info
+
+  # Next.js Admin Dashboard
+  admin-dashboard:
+    name: Admin Dashboard Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: admin_dashboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: admin_dashboard/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run type-check
+      - name: Run tests
+        run: npm test -- --coverage --watchAll=false
+      - name: Build
+        run: npm run build
+        env:
+          NEXTAUTH_SECRET: ci-test-secret
+          NEXTAUTH_URL: http://localhost:3000
+
+  # Backend
+  backend:
+    name: Backend Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run type-check
+      - name: Run tests
+        run: npm test -- --coverage --watchAll=false
+
+  # Security scan
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for secrets
+        run: |
+          # Ensure no .env files are committed
+          if git ls-files --cached | grep -E '\.env$|\.env\.' | grep -v '.env.example'; then
+            echo "ERROR: .env file detected in git!"
+            exit 1
+          fi
+      - name: Check for API keys in code
+        run: |
+          # Scan for potential API key patterns
+          if grep -rn --include="*.ts" --include="*.dart" --include="*.js" --include="*.tsx" \
+            -E "(GEMINI_API_KEY|ELEVENLABS_API_KEY|JWT_SECRET|ENCRYPTION_KEY)\s*=\s*['\"][^'\"]*['\"]" \
+            --exclude-dir=node_modules --exclude-dir=.dart_tool --exclude-dir=build .; then
+            echo "ERROR: Hardcoded API keys detected!"
+            exit 1
+          fi
+          echo "No hardcoded secrets found."

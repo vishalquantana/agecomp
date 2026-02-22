@@ -575,7 +575,7 @@ Shows what Brian "knows" about the user, populated automatically from conversati
 
 The admin dashboard is the B2B surface of the product. It gives aged care teams clinical visibility into the cognitive and emotional wellbeing of each resident through their AI companion interactions.
 
-### 11.1 Dashboard Users & Roles
+### 12.1 Dashboard Users & Roles
 
 | Role | Access Level | Key Use Cases |
 |------|-------------|--------------|
@@ -585,9 +585,9 @@ The admin dashboard is the B2B surface of the product. It gives aged care teams 
 | **Gerontologist / Doctor** | Assigned residents, clinical metrics | Cognitive assessment, treatment planning |
 | **Admin / IT** | System settings, no resident data | User management, technical configuration |
 
-### 11.2 Dashboard Sections
+### 12.2 Dashboard Sections
 
-#### 11.2.1 Resident Overview (Home Screen)
+#### 12.2.1 Resident Overview (Home Screen)
 A bird's-eye view of all residents in the facility.
 
 ```
@@ -624,19 +624,19 @@ A bird's-eye view of all residents in the facility.
 └─────────────────────────────────────────────────────────┘
 ```
 
-#### 11.2.2 Individual Resident Profile
+#### 12.2.2 Individual Resident Profile
 Deep view into a single resident's companion interactions and wellness metrics.
 
 **Sections:**
 - **Resident info:** Name, age, room, care notes, family contacts, companion preferences
 - **Engagement summary:** Total conversations, average duration, frequency trends, preferred companion, preferred mode (voice vs chat)
 - **Mood tracker:** Daily mood scores plotted over time (derived from conversation sentiment analysis)
-- **Mental acuity score:** Composite score derived from cognitive signals (see 11.3)
+- **Mental acuity score:** Composite score derived from cognitive signals (see 12.3)
 - **Conversation log:** Searchable, filterable log of all conversations (full transcripts)
 - **Memory profile:** What Brian/Gina/Molly "know" about this person - family members, preferences, upcoming events, health mentions
 - **Alert history:** Past alerts and their resolutions
 
-#### 11.2.3 Conversation Explorer
+#### 12.2.3 Conversation Explorer
 Staff can read and search through conversation transcripts.
 
 **Features:**
@@ -647,7 +647,7 @@ Staff can read and search through conversation transcripts.
 - Export capability for clinical records
 - Audio playback of voice conversations (with appropriate consent/authorization)
 
-#### 11.2.4 Mental Acuity Dashboard
+#### 12.2.4 Mental Acuity Dashboard
 Clinical-grade cognitive tracking derived from natural conversations.
 
 **Metrics tracked:**
@@ -670,7 +670,7 @@ Clinical-grade cognitive tracking derived from natural conversations.
 - Confidence intervals on each metric
 - Annotations for known confounders (illness, medication change, family visit)
 
-#### 11.2.5 Warning & Alert System
+#### 12.2.5 Warning & Alert System
 Automated alerts based on conversation analysis.
 
 **Alert levels:**
@@ -689,7 +689,7 @@ Automated alerts based on conversation analysis.
 5. Staff logs resolution in dashboard
 6. Alert is closed with notes
 
-#### 11.2.6 Reporting & Analytics
+#### 12.2.6 Reporting & Analytics
 Aggregated facility-level insights.
 
 **Reports include:**
@@ -702,7 +702,7 @@ Aggregated facility-level insights.
 
 ---
 
-### 11.3 Mental Acuity Scoring Methodology
+### 12.3 Mental Acuity Scoring Methodology
 
 The acuity score is a composite metric derived passively from natural conversations. It is NOT a clinical diagnostic tool - it is a screening and monitoring aid.
 
@@ -914,10 +914,10 @@ Financial management across all facilities.
 | Component | Technology | Rationale |
 |-----------|-----------|-----------|
 | **Voice synthesis** | ElevenLabs Conversational AI | Best-in-class natural voice, real-time streaming, multiple distinct voice profiles |
-| **LLM backbone** | GPT-4o / Claude (evaluation needed) | Strong conversational ability, instruction following, safety |
-| **Memory store** | Vector database (Pinecone/Weaviate) + structured DB | Semantic recall for natural conversation + structured data for metrics |
-| **Mobile app** | React Native or Flutter | Cross-platform iOS/Android from single codebase |
-| **Admin dashboard** | React/Next.js web app | Modern, responsive, real-time updates |
+| **LLM backbone** | Google Gemini 3 Flash (`gemini-3-flash`) | Frontier reasoning at flash-tier speed/cost, 1M token context window, multimodal input, strong instruction following and agentic capability |
+| **Memory store** | Zvec (embedded vector DB) + structured DB | In-process vector search with no external service dependency, on-device RAG capability, low-latency semantic recall + structured data for metrics |
+| **Mobile app** | Flutter | Cross-platform iOS/Android from single codebase |
+| **Admin dashboard** | Next.js web app | Modern, responsive, real-time updates |
 | **Telephony** | Twilio or equivalent | Outbound calling, push notifications |
 | **Analytics** | Custom ML pipeline | Sentiment analysis, cognitive metric extraction |
 | **Infrastructure** | AWS/GCP | HIPAA-eligible infrastructure for healthcare compliance |
@@ -952,12 +952,12 @@ Post-call: Full transcript → Memory extraction pipeline
 
 ---
 
-## 13. UX & Design Principles
+## 15. UX & Design Principles
 
-### 13.1 Design Philosophy
+### 15.1 Design Philosophy
 The app should feel like a **phone's contact list**, not a tech product. Brian, Gina, and Molly are people in your phone that you call or text.
 
-### 13.2 Home Screen Concept
+### 15.2 Home Screen Concept
 
 ```
 ┌───────────────────────────────┐
@@ -995,7 +995,7 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 └───────────────────────────────┘
 ```
 
-### 13.3 Voice Call Screen Concept
+### 15.3 Voice Call Screen Concept
 
 ```
 ┌───────────────────────────────┐
@@ -1025,7 +1025,7 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 └───────────────────────────────┘
 ```
 
-### 13.4 Accessibility Requirements
+### 15.4 Accessibility Requirements
 - **Font size:** Minimum 18pt, adjustable up to 32pt
 - **Touch targets:** Minimum 48x48dp for all interactive elements
 - **Color contrast:** WCAG AAA compliance (7:1 ratio)
@@ -1037,42 +1037,42 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 
 ---
 
-## 14. Platform & Distribution
+## 16. Platform & Distribution
 
-### 14.1 Consumer App
+### 16.1 Consumer App
 - **iOS:** iPhone 8+ (iOS 15+)
 - **Android:** Android 10+
 - **Distribution:** App Store and Google Play
 - **Size:** Target <100MB
 
-### 14.2 Admin Dashboard
+### 16.2 Admin Dashboard
 - **Platform:** Web application (responsive)
 - **Optimized for:** Desktop and iPad/tablet
 - **Browsers:** Chrome, Safari, Edge (latest 2 versions)
 - **Authentication:** SSO integration for healthcare facilities (SAML/OIDC)
 
-### 14.3 Distribution Model
+### 16.3 Distribution Model
 - **B2B2C:** Sell to aged care facilities who provision for their residents
 - **D2C (Phase 2):** Direct to consumer for independent-living seniors (via family purchase)
 
 ---
 
-## 15. Data, Privacy & Compliance
+## 17. Data, Privacy & Compliance
 
-### 15.1 Regulatory Considerations
+### 17.1 Regulatory Considerations
 - **HIPAA compliance** (if operating in US healthcare contexts)
 - **SOC 2 Type II** for enterprise trust
 - **Australian Privacy Act / Aged Care Quality Standards** (if targeting Australian market)
 - **GDPR** (if European expansion)
 
-### 15.2 Consent Framework
+### 17.2 Consent Framework
 - Residents must consent to AI companion usage
 - Residents must be informed that conversations may be reviewed by care staff
 - Residents must consent to voice recording
 - Opt-out must be simple and immediate
 - Family/guardian consent for residents with diminished capacity
 
-### 15.3 Data Handling
+### 17.3 Data Handling
 - All conversations encrypted at rest and in transit
 - Conversation transcripts stored with access controls
 - Memory data is per-user and isolated
@@ -1080,7 +1080,7 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 - Data retention policies configurable per facility
 - Right to deletion: All resident data can be permanently deleted
 
-### 15.4 AI Safety
+### 17.4 AI Safety
 - No medical diagnosis or advice
 - No financial advice
 - Distress/crisis detection with immediate escalation
@@ -1089,9 +1089,9 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 
 ---
 
-## 16. Success Metrics
+## 18. Success Metrics
 
-### 16.1 Consumer Metrics (Senior Engagement)
+### 18.1 Consumer Metrics (Senior Engagement)
 
 | Metric | Target (Month 3) | Target (Month 12) |
 |--------|------------------|-------------------|
@@ -1102,7 +1102,7 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 | NPS score | 40+ | 60+ |
 | Proactive follow-up acknowledgment rate | 50% | 70% |
 
-### 16.2 Clinical Metrics (Admin Dashboard)
+### 18.2 Clinical Metrics (Admin Dashboard)
 
 | Metric | Target |
 |--------|--------|
@@ -1112,7 +1112,7 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 | Care team weekly dashboard usage | >80% of staff |
 | Clinical team satisfaction score | >4.0/5.0 |
 
-### 16.3 Business Metrics
+### 18.3 Business Metrics
 
 | Metric | Target (Year 1) |
 |--------|-----------------|
@@ -1124,7 +1124,7 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 
 ---
 
-## 17. Phasing & Roadmap
+## 19. Phasing & Roadmap
 
 ### Phase 1: Foundation (Months 1-3)
 **Goal:** Brian voice + chat, basic memory, basic admin dashboard
@@ -1173,7 +1173,68 @@ The app should feel like a **phone's contact list**, not a tech product. Brian, 
 
 ---
 
-## 18. Open Questions
+## 20. Screen Inventory
+
+> Full wireframes for all screens available in [designs.md](./designs.md)
+
+### 20.1 Summary
+
+The platform consists of **30 screens** across 3 personas, organized into 3 development phases.
+
+| Phase | Screens | Focus |
+|-------|---------|-------|
+| **Phase 1 (MVP)** | 16 screens | Brian companion (voice + chat), basic admin dashboard, core mobile app |
+| **Phase 2** | 10 screens | Gina + Molly companions, proactive calls, mental acuity dashboard, super admin portal |
+| **Phase 3** | 4 screens | Global analytics, billing management, advanced reporting |
+
+### 20.2 Senior User App (Mobile) - 12 Screens
+
+| # | Screen | Priority | Phase |
+|---|--------|----------|-------|
+| 1 | Onboarding (6 steps) | P0 | Phase 1 |
+| 2 | Home Screen | P0 | Phase 1 |
+| 3 | Brian - Chat | P0 | Phase 1 |
+| 4 | Brian - Voice Call | P0 | Phase 1 |
+| 5 | Incoming Call | P0 | Phase 2 |
+| 6 | Gina - Chat | P0 | Phase 2 |
+| 7 | Gina - Game in Progress | P0 | Phase 2 |
+| 8 | Molly - Chat | P0 | Phase 2 |
+| 9 | Molly - News Briefing | P1 | Phase 2 |
+| 10 | Daily Routine / Reminders | P0 | Phase 1 |
+| 11 | Settings | P1 | Phase 1 |
+| 12 | Profile | P1 | Phase 1 |
+
+### 20.3 Aged Care Admin Dashboard (Web) - 11 Screens
+
+| # | Screen | Priority | Phase |
+|---|--------|----------|-------|
+| 13 | Admin Login | P0 | Phase 1 |
+| 14 | Dashboard Home | P0 | Phase 1 |
+| 15 | Resident List | P0 | Phase 1 |
+| 16 | Resident Profile | P0 | Phase 1 |
+| 17 | Conversation Explorer | P0 | Phase 1 |
+| 18 | Conversation Transcript | P0 | Phase 1 |
+| 19 | Mental Acuity Dashboard | P0 | Phase 2 |
+| 20 | Alerts & Warnings | P0 | Phase 1 |
+| 21 | Alert Detail | P0 | Phase 1 |
+| 22 | Reports & Analytics | P1 | Phase 2 |
+| 23 | Resident Companion Config | P1 | Phase 1 |
+
+### 20.4 Super Admin Dashboard (Web) - 7 Screens
+
+| # | Screen | Priority | Phase |
+|---|--------|----------|-------|
+| 24 | Super Admin Home | P0 | Phase 2 |
+| 25 | Facility Management | P0 | Phase 2 |
+| 26 | Facility Detail | P0 | Phase 2 |
+| 27 | Global Analytics | P1 | Phase 3 |
+| 28 | System Health | P1 | Phase 2 |
+| 29 | User & Role Management | P0 | Phase 2 |
+| 30 | Billing & Subscriptions | P1 | Phase 3 |
+
+---
+
+## 21. Open Questions
 
 | # | Question | Impact | Status |
 |---|----------|--------|--------|
