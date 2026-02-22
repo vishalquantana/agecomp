@@ -721,9 +721,138 @@ The acuity score is a composite metric derived passively from natural conversati
 
 ---
 
-## 12. Technical Architecture
+## 13. Super Admin Dashboard - Platform Management
 
-### 12.1 High-Level System Architecture
+> Full wireframes available in [designs.md](./designs.md) - Screens 24-30
+
+The Super Admin dashboard is the platform-level management interface used by the internal operations/product team to manage the entire business across all facilities.
+
+### 13.1 Super Admin Users
+- Internal operations team
+- Platform administrators
+- C-suite / management
+
+### 13.2 Super Admin Dashboard Home
+Bird's-eye view of the entire platform.
+
+**Key metrics displayed:**
+- Total facilities (active + trial)
+- Total users / active users (with percentage)
+- Active users today (DAU)
+- Total conversations today
+- Total voice minutes today
+- Average daily engagement (minutes per user)
+- Platform-wide open alerts (with critical count)
+
+**Facility overview table:**
+- All facilities listed with: name, user count, active today, average mood score, open alerts
+- Click-through to individual facility detail
+
+**Platform growth chart:**
+- 6-month trend line showing total users and active users
+
+**Companion usage split:**
+- Platform-wide percentage breakdown across Brian, Gina, and Molly
+
+### 13.3 Facility Management
+Full CRUD management of facility accounts.
+
+**Features:**
+- List all facilities with: name, location, user count, status (Active/Trial/Suspended), plan tier
+- Search and filter capabilities
+- Add new facility workflow
+- Summary stats: active vs trial counts, plan tier distribution
+
+### 13.4 Facility Detail View
+Deep view into a single facility's operations.
+
+**Sections:**
+- **Facility info:** Name, location, plan, primary contact, join date, status
+- **Key metrics:** Total residents, active today, avg daily engagement, open alerts
+- **Staff accounts:** List of admin users at this facility with roles and last login; add/manage staff
+- **Engagement trend:** Weekly chart for this facility
+- **Billing:** Current plan, per-resident pricing, next billing date, invoice history, plan change options
+- **Actions:** Open facility's admin dashboard, edit settings, suspend facility, export data
+
+### 13.5 Global User Analytics
+Platform-wide analytics across all facilities.
+
+**Metrics & Visualizations:**
+- **User activity:** Total users, DAU, WAU, MAU with percentages
+- **User status breakdown:** Daily active, weekly active, monthly-only active, inactive (30+ days), churned (60+ days)
+- **Conversation volume:** Weekly trend chart split by voice vs chat
+- **Engagement heatmap:** Hour-of-day by day-of-week density matrix showing peak usage patterns
+- **Retention cohorts:** Monthly cohort analysis showing Week 1/4/8/12 retention rates
+- Export all analytics (CSV/PDF)
+
+### 13.6 System Health & Monitoring
+Technical infrastructure monitoring for operations team.
+
+**Service status panels (real-time):**
+
+| Service | Metrics |
+|---------|---------|
+| API | Status, uptime % |
+| Voice Pipeline (ElevenLabs) | Status, uptime %, active calls, avg latency, success rate |
+| LLM Backend | Status, uptime %, requests/day, avg tokens/convo, error rate, response time |
+| Memory Service | Status, uptime %, total memories stored, memories extracted/day, recall accuracy, DB size |
+
+**Budget monitoring:**
+- ElevenLabs monthly usage vs budget (voice minutes)
+- LLM monthly token usage vs budget
+- Infrastructure cost tracking
+
+**Incident log:**
+- Recent incidents with timestamps, descriptions, durations, resolution status
+
+### 13.7 User & Role Management
+Manage all admin users and roles across all facilities.
+
+**Tabs:**
+- **Admin Users** - All facility staff users with name, facility, role, status (searchable/filterable)
+- **Resident Users** - All senior users with facility assignment
+- **Roles & Permissions** - Configurable permission matrix
+
+**Default permission matrix:**
+
+| Role | Residents | Conversations | Alerts | Settings |
+|------|-----------|---------------|--------|----------|
+| Facility Manager | All | All | All | All |
+| Care Coordinator | Assigned | All | All | View only |
+| Nurse / Staff | Assigned | Summary only | All | None |
+| Doctor / Specialist | Assigned | All (full transcripts) | All | View only |
+| IT Admin | None | None | None | All |
+
+### 13.8 Billing & Subscription Management
+Financial management across all facilities.
+
+**Revenue dashboard:**
+- MRR (Monthly Recurring Revenue) with month-over-month growth trend
+- Active paid subscriptions count
+- Average revenue per facility
+- Trial-to-paid conversion rate
+
+**Facility subscriptions table:**
+- Facility name, plan tier (Pro/Basic/Trial), user count, monthly amount, payment status
+
+**Cost breakdown (monthly):**
+
+| Cost Category | Typical Share |
+|---------------|---------------|
+| ElevenLabs (Voice synthesis) | ~42% |
+| LLM API (OpenAI/Anthropic) | ~35% |
+| Infrastructure (AWS/GCP) | ~15% |
+| Telephony (Twilio) | ~5% |
+| Other | ~3% |
+
+**Revenue trend:** 6-month revenue growth chart
+**Actions:** View invoices, configure pricing tiers, export financial data
+
+---
+
+## 14. Technical Architecture
+
+### 14.1 High-Level System Architecture
 
 ```
 ┌──────────────┐     ┌──────────────────────────────────┐
@@ -780,7 +909,7 @@ The acuity score is a composite metric derived passively from natural conversati
                      └──────────────────────────────────┘
 ```
 
-### 12.2 Key Technology Choices
+### 14.2 Key Technology Choices
 
 | Component | Technology | Rationale |
 |-----------|-----------|-----------|
@@ -793,7 +922,7 @@ The acuity score is a composite metric derived passively from natural conversati
 | **Analytics** | Custom ML pipeline | Sentiment analysis, cognitive metric extraction |
 | **Infrastructure** | AWS/GCP | HIPAA-eligible infrastructure for healthcare compliance |
 
-### 12.3 Voice Call Technical Flow
+### 14.3 Voice Call Technical Flow
 
 ```
 User taps "Call Brian"
